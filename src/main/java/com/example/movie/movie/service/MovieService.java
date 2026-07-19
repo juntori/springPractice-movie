@@ -1,5 +1,6 @@
 package com.example.movie.movie.service;
 
+import com.example.movie.exception.MovieNotFoundException;
 import com.example.movie.movie.dto.*;
 import com.example.movie.movie.entity.Movie;
 import com.example.movie.movie.repository.MovieRepository;
@@ -37,7 +38,7 @@ public class MovieService {
     @Transactional(readOnly = true)
     public MovieGetResponse getOne(Long movieId) {
         Movie movie = movieRepository.findById(movieId).orElseThrow(
-                () -> new IllegalArgumentException("없는 영화 입니다.")
+                () -> new MovieNotFoundException("없는 영화 입니다.")
         );
         return new MovieGetResponse(
                 movie.getId(),
@@ -47,7 +48,7 @@ public class MovieService {
 
     public MovieUpdateResponse update(Long movieId, MovieUpdateRequest request) {
         Movie movie = movieRepository.findById(movieId).orElseThrow(
-                () -> new IllegalArgumentException("없는 영화입니다.")
+                () -> new MovieNotFoundException("없는 영화입니다.")
         );
         movie.update(request.getTitle());
         return new MovieUpdateResponse(
@@ -59,7 +60,7 @@ public class MovieService {
     public void delete(Long movieId) {
         boolean existence = movieRepository.existsById(movieId);
         if(!existence){
-            throw new IllegalArgumentException("없는 영화입니다.");
+            throw new MovieNotFoundException("없는 영화입니다.");
         }
     }
 }

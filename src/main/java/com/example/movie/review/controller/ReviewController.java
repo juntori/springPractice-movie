@@ -2,6 +2,7 @@ package com.example.movie.review.controller;
 
 import com.example.movie.review.dto.*;
 import com.example.movie.review.service.ReviewService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class ReviewController {
     @PostMapping("/movies/{movieId}/reviews")
     public ResponseEntity<ReviewCreateResponse> create(
             @PathVariable Long movieId,
-            @RequestBody ReviewCreateRequest request
+            @Valid @RequestBody ReviewCreateRequest request
     ) {
         return ResponseEntity.ok(reviewService.create(movieId, request));
     }
@@ -36,7 +37,7 @@ public class ReviewController {
     @PutMapping("/movies/{movieId}/reviews/{reviewId}")
     public ResponseEntity<ReviewUpdateResponse> update(
             @PathVariable Long reviewId,
-            @RequestBody ReviewUpdateRequest request
+            @Valid @RequestBody ReviewUpdateRequest request
     ) {
         return ResponseEntity.ok(reviewService.update(reviewId, request));
     }

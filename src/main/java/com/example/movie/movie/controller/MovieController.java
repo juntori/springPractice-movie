@@ -2,6 +2,7 @@ package com.example.movie.movie.controller;
 
 import com.example.movie.movie.dto.*;
 import com.example.movie.movie.service.MovieService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ public class MovieController {
 
     @PostMapping("/movies")
     public ResponseEntity<MovieCreateResponse> create(
-            @RequestBody MovieCreateRequest request
+            @Valid @RequestBody MovieCreateRequest request
     ) {
         return ResponseEntity.ok(movieService.create(request));
     }
@@ -35,7 +36,7 @@ public class MovieController {
     @PutMapping("/movies/{movieId}")
     public ResponseEntity<MovieUpdateResponse> update(
             @PathVariable Long movieId,
-            @RequestBody MovieUpdateRequest request
+            @Valid @RequestBody MovieUpdateRequest request
     ) {
         return ResponseEntity.ok(movieService.update(movieId, request));
     }
